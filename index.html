@@ -19,91 +19,100 @@
             --text-color: #4a4a4a;
         }
 
-        /* Body & Layout */
-        body {
+        /* FIXED: Native mobile scrolling configuration */
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
             background-color: var(--soft-white);
+            -webkit-overflow-scrolling: touch; /* Smooth iOS scroll acceleration */
+        }
+
+        body {
             color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            overflow: hidden;
+            justify-content: flex-start; /* Prevents vertical clipping on small screens */
+            padding: 20px 15px;
             position: relative;
         }
 
         /* Main Container */
         .card {
             background: white;
-            padding: 40px 30px;
+            padding: 30px 20px; /* FIXED: Slightly tighter padding for mobile screens */
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(255, 139, 148, 0.2);
-            max-width: 600px;
+            max-width: 500px; /* FIXED: Ideal width scale for modern smartphones */
             width: 100%;
             text-align: center;
             position: relative;
-            z-index: 10; /* Ensures the card sits visually on top */
+            z-index: 10;
+            margin: auto 0; /* Centers card vertically if space permits, otherwise scrolls gracefully */
         }
 
-        /* Typography */
+        /* Typography Styles optimized for Mobile viewports */
         h1 {
             color: var(--dark-pink);
-            font-size: 2.3rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem; /* FIXED: Balanced size so it does not wrap awkwardly */
+            margin-bottom: 15px;
         }
         p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            font-size: 1rem; /* FIXED: Easy readability baseline for mobile devices */
+            line-height: 1.5;
+            margin-bottom: 15px;
         }
         .letter-text {
             text-align: left;
             background: #fffcfc;
-            padding: 24px;
+            padding: 18px; /* FIXED: More space-efficient padding */
             border-left: 4px solid var(--dark-pink);
             border-radius: 4px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
         }
         .letter-text p {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .letter-text p:last-child {
             margin-bottom: 0;
         }
 
-        /* Buttons */
+        /* Button Interaction Controls */
         .btn {
             background-color: var(--dark-pink);
             color: white;
             border: none;
-            padding: 14px 32px;
-            font-size: 1.05rem;
+            padding: 12px 28px; /* FIXED: Comfortably tappable mobile hit targets */
+            font-size: 1rem;
             border-radius: 25px;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
             font-weight: bold;
-            margin: 10px;
+            margin: 8px;
             box-shadow: 0 4px 15px rgba(255, 139, 148, 0.4);
+            display: inline-block;
+            max-width: 100%;
         }
         .btn:hover {
             background-color: #ff6b76;
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
-        /* Forgiveness Meter */
+        /* Forgiveness Progress Monitor */
         .meter-container {
-            margin: 25px 0 10px 0;
+            margin: 20px 0 5px 0;
             display: none;
         }
         .meter-bar {
             width: 100%;
             background-color: #eee;
-            height: 22px;
-            border-radius: 11px;
+            height: 20px;
+            border-radius: 10px;
             overflow: hidden;
-            margin-top: 10px;
+            margin-top: 8px;
             border: 1px solid #e0e0e0;
         }
         .meter-fill {
@@ -113,10 +122,10 @@
             transition: width 0.4s ease;
         }
 
-        /* Floating Hearts Animation */
+        /* Floating Hearts Layer Container */
         .heart {
-            position: absolute;
-            bottom: -5%;
+            position: fixed; /* FIXED: Stays locked relative to screen instead of inflating container */
+            bottom: -50px;
             color: var(--dark-pink);
             font-size: 24px;
             user-select: none;
@@ -127,30 +136,34 @@
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 1; }
             50% { opacity: 0.8; }
-            100% { transform: translateY(-105vh) scale(1.5) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(-110vh) scale(1.5) rotate(360deg); opacity: 0; }
         }
 
-        /* FIXED: Disguised layout container tricking browser policy constraints */
+        /* Background Audio Player Wrapper Constraint */
         #player-wrapper {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
-            height: 200px;
-            z-index: 1; /* Places the player safely directly behind the white card */
+            width: 1px; /* FIXED: Collapsed structure to completely protect touch areas */
+            height: 1px;
+            z-index: 1;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <audio id="backgroundAudio" loop preload="auto">
-        <source src="vidssave.com @SaiAbhyankkar - Pavazha Malli (Music Video ) _ Kayadu _ Shruti Haasan _ Vivek _ Thejo _ Think Indie LOW.webm" type="video/webm">
-        Your browser does not support background audio.
-    </audio>
+    <div id="player-wrapper">
+        <audio id="backgroundAudio" loop preload="auto">
+            <source src="vidssave.com%20@SaiAbhyankkar%20-%20Pavazha%20Malli%20(Music%20Video%20)%20_%20Kayadu%20_%20Shruti%20Haasan%20_%20Vivek%20_%20Thejo%20_%20Think%20Indie%20LOW.webm" type="audio/webm">
+            Your browser does not support background audio.
+        </audio>
+    </div>
 
     <div class="card">
-        <h1>I Am So Sorry, Saisha 💖</h1>
+        <h1>I Am So Sorry, SAISHA 💖</h1>
         
         <div class="letter-text">
             <p>Hey Saisha,</p>
@@ -184,8 +197,8 @@
         function ensureAudioOnInteraction() {
             if (backgroundAudio && backgroundAudio.paused) {
                 backgroundAudio.volume = 0.2;
-                backgroundAudio.play().catch(() => {
-                    // User interaction required; ignore autoplay failures
+                backgroundAudio.play().catch((err) => {
+                    console.log("Playback blocked or failed:", err);
                 });
             }
         }
@@ -227,11 +240,12 @@
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
+            // FIXED: Random boundary offset to keep hearts within mobile viewport edges
+            heart.style.left = (Math.random() * 85 + 5) + 'vw';
 
             const duration = Math.random() * 2 + 3;
             heart.style.animationDuration = duration + 's';
-            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            heart.style.fontSize = Math.random() * 12 + 15 + 'px';
 
             document.body.appendChild(heart);
 
@@ -242,3 +256,5 @@
     </script>
 </body>
 </html>
+
+
